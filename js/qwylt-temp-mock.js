@@ -1,8 +1,7 @@
 window.addEventListener('load', function(){
-	document.getElementById('mainPatch').classList.add('intro');
 	for (i = 0; i < patches.length; i++) {
 		var patch = patches[i]
-		planeElement.innerHTML +='<span class="patch" style="left:' + (patch.coorX * 300) + 'px; top: ' + (patch.coorY * 300) + 'px;"><img src="' + patch.img + '" title="' + patch.name + ' - ' + patch.id + '"></span>';
+		planeElement.innerHTML +='<div class="patch" style="left:' + (patch.coorX * 300) + 'px; top: ' + (patch.coorY * 300) + 'px;"><img src="' + patch.img + '" title="' + patch.name + ' - ' + patch.id + '"></div>';
 	}
 });
 
@@ -13,70 +12,70 @@ var patches = [
 		id: 1,
 		coorX: 1,
 		coorY: 1,
-		name: "One",
+		name: "Vin",
 		img: "images/patches/nature1.jpg"
 	}, 
 	{
 		id: 2,
 		coorX: 1,
 		coorY: 0,
-		name: "Two",
+		name: "Lizzy",
 		img: "images/patches/nature2.jpg"
 	}, 
 	{
 		id: 3,
 		coorX: 0,
 		coorY: 1,
-		name: "three",
+		name: "Joey",
 		img: "images/patches/nature3.jpg"
 	}, 
 	{
 		id: 4,
 		coorX: 0,
 		coorY: -1,
-		name: "four",
+		name: "Gypsy",
 		img: "images/patches/nature4.jpg"
 	}, 
 	{
 		id: 5,
 		coorX: 0,
 		coorY: -2,
-		name: "five",
+		name: "Charlie",
 		img: "images/patches/nature5.jpg"
 	}, 
 	{
 		id: 6,
 		coorX: -1,
 		coorY: 0,
-		name: "six",
+		name: "Pixel",
 		img: "images/patches/nature6.jpg"
 	}, 
 	{
 		id: 7,
 		coorX: -1,
 		coorY: -1,
-		name: "seven",
+		name: "Ann",
 		img: "images/patches/nature11.jpg"
 	}, 
 	{
 		id: 8,
 		coorX: -1,
 		coorY: 1,
-		name: "eight",
+		name: "Foo",
 		img: "images/patches/nature8.jpg"
 	}, 
 	{
 		id: 9,
 		coorX: -2,
 		coorY: 0,
-		name: "nine",
+		name: "Fuzz",
 		img: "images/patches/nature9.jpg"
 	}, 
 	{
 		id: 10,
 		coorX: 0,
 		coorY: 2,
-		name: "ten",
+		name: "Fat",
 		img: "images/patches/nature10.jpg"
 	}
 ];

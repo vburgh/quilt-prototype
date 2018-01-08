@@ -8,6 +8,10 @@ body {
 	min-height: 100%;
 	padding: 0;
 	position: relative;
+
+	&.warp {
+		overflow: hidden;
+	}
 }
 
 #collection {
@@ -49,9 +53,9 @@ body {
 	position: absolute;
 	height: 100%;
 	top: 50%;
-	margin-top: -125px;
+	margin-top: -150px;
 	left: 50%;
-	margin-left: -125px;
+	margin-left: -150px;
 	width: 100%;
 }
 
@@ -64,7 +68,7 @@ body {
 	transition: all 0.33s ease-in-out;
 }
 
-.patch {
+.patch, header[role="banner"] {
 	box-sizing: border-box;
 	height: 300px;
 	position: absolute;
@@ -84,13 +88,6 @@ header[role="banner"] {
 	text-align: center;
 	transition: all 0.2s ease-in-out;
 	z-index: 1;
-
-	&.intro {
-		height: 500px;
-		left: -150px;
-		top: -150px;
-		width: 500px;
-	}
 }
 
 
@@ -129,4 +126,26 @@ header[role="banner"] {
 	position: relative;
 	top: 0;
 	width: 50vw;
+}
+
+
+.overlay {
+	background: rgba(10,10,10,0.95);
+	box-sizing: border-box;
+	color: #fff;
+	display: none;
+	overflow: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 3;
+	transition: all 0.2s ease-in-out;
+	text-align: center;
+
+	img {
+		max-height: 100%;
+		max-width: 100%;
+	}
 }
