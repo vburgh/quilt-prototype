@@ -57,6 +57,12 @@ body {
 	left: 50%;
 	margin-left: -150px;
 	width: 100%;
+
+	&.zoom-out {
+		zoom: 0.2;
+		-moz-transform: scale(0.2);
+		-moz-transform-origin: 0 0;
+	}
 }
 
 #plane {

@@ -20,19 +20,28 @@ var body = document.querySelector('body'),
 
 var overlay = false;
 
-
-function getPatch(e) {
-	return patches[e];
+function getPatch(x) {
+	return patches[x];
 }
 
-function viewPatch(e) {
+function getUser(x) {
+	return users[x];
+}
+
+function viewPatch(x) {
+	var user = users.find(users => users.id === getPatch(x).userId);
+
 	return function(){
-		var patch = getPatch(e);
 		document.querySelector('.overlay').style.display = "block";
-		document.querySelector('.overlay img').src = patch.img;
-		document.querySelector('.overlay h2').textContent = patch.name;
-		document.querySelector('.overlay span').textContent = patch.id;
+		document.querySelector('.overlay img.showcase').src = getPatch(x).img;
+		document.querySelector('.overlay h2').textContent = getPatch(x).name;
+		document.querySelector('.overlay span').textContent = getPatch(x).id;
+
+		document.querySelector('.overlay p').textContent = user.name;
+		document.querySelector('.overlay img.avatar').src = user.avatar;
+
 		document.querySelector('.overlay').addEventListener('click', closeOverlay);
+
 		overlay = true;
 	}
 }
@@ -58,7 +67,9 @@ window.addEventListener('load', init);
 
 
 
-
+document.querySelector('button.zoom').addEventListener('click', function(){
+	document.getElementById('test').classList.add('zoom-out');
+});
 
 document.querySelector('button.btn-nav-up').addEventListener('click', moveUpPlane);
 
@@ -94,7 +105,6 @@ function moveRightPlane () {
 	planeLeftPos = Number(planeLeftPos) - Number(300);
 	planeElement.style.setProperty('left', planeLeftPos + 'px');
 }
-
 
 
 
@@ -137,7 +147,7 @@ function handleTouchMove(event) {
 			moveUpPlane();
 		}
 	}
-	
+
 	xDown = null;
 	yDown = null;
 };
