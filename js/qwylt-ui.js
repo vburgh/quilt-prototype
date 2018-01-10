@@ -1,23 +1,11 @@
 var body = document.querySelector('body'),
 	planeElement = document.getElementById('plane'),
 	planeTopPos = planeElement.scrollTop,
-	planeLeftPos = planeElement.scrollLeft;
+	planeLeftPos = planeElement.scrollLeft,
+	patchUnit = 300;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var zoom = false;
 var overlay = false;
 
 function getPatch(x) {
@@ -29,20 +17,50 @@ function getUser(x) {
 }
 
 function viewPatch(x) {
+
 	var user = users.find(users => users.id === getPatch(x).userId);
 
 	return function(){
-		document.querySelector('.overlay').style.display = "block";
-		document.querySelector('.overlay img.showcase').src = getPatch(x).img;
-		document.querySelector('.overlay h2').textContent = getPatch(x).name;
-		document.querySelector('.overlay span').textContent = getPatch(x).id;
+		if(zoom) {
+			document.getElementById('collection').classList.remove('zoom-out');
+		}
 
-		document.querySelector('.overlay p').textContent = user.name;
-		document.querySelector('.overlay img.avatar').src = user.avatar;
+		planeTopPos = (getPatch(x).coorY) * -patchUnit,
+		planeLeftPos = (getPatch(x).coorX) * -patchUnit;
+		planeElement.style.setProperty('top', planeTopPos + 'px');
+		planeElement.style.setProperty('left', planeLeftPos + 'px');
 
-		document.querySelector('.overlay').addEventListener('click', closeOverlay);
 
-		overlay = true;
+		if(!zoom) {
+			setTimeout(function(){
+			document.querySelector('.overlay').style.display = "block";
+			document.querySelector('.overlay img.showcase').src = getPatch(x).img;
+			document.querySelector('.overlay h2').textContent = getPatch(x).name;
+			document.querySelector('.overlay span').textContent = getPatch(x).id;
+
+			document.querySelector('.overlay p').textContent = user.name;
+			document.querySelector('.overlay img.avatar').src = user.avatar;
+
+				console.log(getPatch(x).id);
+
+			for (var j = 0; j < comments.length; j++) {
+
+				var comment = comments[j];
+
+				if(comment.patchId === getPatch(x).id) {
+					document.querySelector('ul.comments').innerHTML += '<li>' + comment.text + '</li>';
+				} else {
+					document.querySelector('ul.comments').innerHTML += '';
+				}
+			}
+
+			document.querySelector('.overlay').addEventListener('click', closeOverlay);
+			document.querySelector('.overlay').scrollTo(0,0);
+
+			overlay = true;
+		},0);
+		}
+		zoom = false;
 	}
 }
 
@@ -56,6 +74,27 @@ function init(){
 
 }
 
+window.addEventListener('load', function(){
+	for (var h = 0; h < quiltDetails.length; h++) {
+		var quilt = quiltDetails[h];
+
+		document.getElementById('individual-quilts').innerHTML += '<li><a href="' + quilt.url + '">' + quilt.name + '</a></li>';
+	}
+
+
+	for (var i = 0; i < patches.length; i++) {
+		var patch = patches[i];
+
+		if(patch.quiltId === quiltDetails.id) {
+			patchHtml = '' +
+			'<div class="patch" style="left:' + (patch.coorX * 300) + 'px; top: ' + (patch.coorY * 300) + 'px;">' +
+			'	<img src="' + patch.img + '" title="' + patch.name + ' - ' + patch.id + '">' + 
+			'	<a href="#" class="view-patch"><img src="' + users.find(users => users.id === patch.userId).avatar + '" class="avatar" /> ' + users.find(users => users.id === patch.userId).name + '</a>' +
+			'</div>';
+			planeElement.innerHTML += patchHtml;
+		}
+	}
+});
 
 window.addEventListener('load', init);
 
@@ -63,12 +102,14 @@ window.addEventListener('load', init);
 
 
 
-
-
-
-
 document.querySelector('button.zoom').addEventListener('click', function(){
-	document.getElementById('test').classList.add('zoom-out');
+	if(!zoom) {
+		document.getElementById('collection').classList.add('zoom-out');
+		zoom = true;
+	} else {
+		document.getElementById('collection').classList.remove('zoom-out');
+		zoom = false;
+	}
 });
 
 document.querySelector('button.btn-nav-up').addEventListener('click', moveUpPlane);
@@ -87,22 +128,22 @@ function closeOverlay () {
 }
 
 function moveUpPlane () {
-	planeTopPos = Number(planeTopPos) + Number(300);
+	planeTopPos = Number(planeTopPos) + patchUnit;
 	planeElement.style.setProperty('top', planeTopPos + 'px');
 }
 
 function moveDownPlane () {
-	planeTopPos = Number(planeTopPos) - Number(300);
+	planeTopPos = Number(planeTopPos) - patchUnit;
 	planeElement.style.setProperty('top', planeTopPos + 'px');
 }
 
 function moveLeftPlane () {
-	planeLeftPos = Number(planeLeftPos) + Number(300);
+	planeLeftPos = Number(planeLeftPos) + patchUnit;
 	planeElement.style.setProperty('left', planeLeftPos + 'px');
 }
 
 function moveRightPlane () {
-	planeLeftPos = Number(planeLeftPos) - Number(300);
+	planeLeftPos = Number(planeLeftPos) - patchUnit;
 	planeElement.style.setProperty('left', planeLeftPos + 'px');
 }
 

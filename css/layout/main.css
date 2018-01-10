@@ -5,6 +5,7 @@ body {
   background: #fff;
   box-sizing: border-box;
   color: #222;
+  font: 14px Arial;
   margin: 0;
   min-height: 100%;
   padding: 0;
@@ -21,7 +22,13 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 0; }
+  z-index: 0;
+  transition: all 0.33s linear; }
+  #collection.zoom-out {
+    transform: scale(0.2);
+    transform-origin: 50% 50%;
+    -moz-transform: scale(0.2);
+    -moz-transform-origin: 50% 50%; }
 
 .btn-nav {
   padding: 4px;
@@ -48,10 +55,6 @@ body {
   left: 50%;
   margin-left: -150px;
   width: 100%; }
-  #test.zoom-out {
-    zoom: 0.2;
-    -moz-transform: scale(0.2);
-    -moz-transform-origin: 0 0; }
 
 #plane {
   position: absolute;
@@ -70,9 +73,30 @@ body {
   .patch img, header[role="banner"] img {
     max-height: 100%;
     max-width: 100%; }
+  .patch:hover .view-patch, header[role="banner"]:hover .view-patch {
+    display: block; }
+
+.view-patch {
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  padding: 10px;
+  line-height: 32px;
+  text-decoration: none;
+  color: #fff; }
+  .view-patch img {
+    border-radius: 50%;
+    float: left;
+    height: 32px;
+    margin-right: 10px;
+    width: 32px; }
 
 header[role="banner"] {
-  color: #fff;
+  color: #555;
   top: 0;
   left: 0;
   text-align: center;

@@ -1,15 +1,23 @@
-window.addEventListener('load', function(){
-	for (i = 0; i < patches.length; i++) {
-		var patch = patches[i]
-		planeElement.innerHTML +='<div class="patch" style="left:' + (patch.coorX * 300) + 'px; top: ' + (patch.coorY * 300) + 'px;"><img src="' + patch.img + '" title="' + patch.name + ' - ' + patch.id + '"></div>';
-	}
-});
 
 
 //mock data
+var quiltDetails = [
+	{
+		id: 1,
+		name: "Hello World",
+		url: "q.html"
+	},
+	{
+		id: 2,
+		name: "Top Rated - Feb 2018",
+		url: "q2.html"
+	}
+]
+
 var patches = [
 	{
 		id: 1,
+		quiltId: 1,
 		coorX: 1,
 		coorY: 1,
 		name: "Vin",
@@ -18,6 +26,7 @@ var patches = [
 	}, 
 	{
 		id: 2,
+		quiltId: 1,
 		coorX: 1,
 		coorY: 0,
 		name: "Lizzy",
@@ -26,6 +35,7 @@ var patches = [
 	}, 
 	{
 		id: 3,
+		quiltId: 1,
 		coorX: 0,
 		coorY: 1,
 		name: "Joey",
@@ -34,6 +44,7 @@ var patches = [
 	}, 
 	{
 		id: 4,
+		quiltId: 1,
 		coorX: 0,
 		coorY: -1,
 		name: "Gypsy",
@@ -42,6 +53,7 @@ var patches = [
 	}, 
 	{
 		id: 5,
+		quiltId: 1,
 		coorX: 0,
 		coorY: -2,
 		name: "Charlie",
@@ -50,6 +62,7 @@ var patches = [
 	}, 
 	{
 		id: 6,
+		quiltId: 1,
 		coorX: -1,
 		coorY: 0,
 		name: "Pixel",
@@ -58,6 +71,7 @@ var patches = [
 	}, 
 	{
 		id: 7,
+		quiltId: 1,
 		coorX: -1,
 		coorY: -1,
 		name: "Ann",
@@ -66,6 +80,7 @@ var patches = [
 	}, 
 	{
 		id: 8,
+		quiltId: 1,
 		coorX: -1,
 		coorY: 1,
 		name: "Foo",
@@ -74,6 +89,7 @@ var patches = [
 	}, 
 	{
 		id: 9,
+		quiltId: 1,
 		coorX: -2,
 		coorY: 0,
 		name: "Fuzz",
@@ -82,10 +98,29 @@ var patches = [
 	}, 
 	{
 		id: 10,
+		quiltId: 1,
 		coorX: 0,
 		coorY: 2,
 		name: "Fat",
 		img: "images/patches/nature10.jpg",
+		userId: 10
+	}, 
+	{
+		id: 11,
+		quiltId: 2,
+		coorX: 1,
+		coorY: 0,
+		name: "Fat",
+		img: "images/patches/nature10.jpg",
+		userId: 21
+	}, 
+	{
+		id: 12,
+		quiltId: 2,
+		coorX: 1,
+		coorY: 1,
+		name: "Fat",
+		img: "images/patches/nature1.jpg",
 		userId: 10
 	}
 ];
@@ -94,11 +129,42 @@ var users = [
 	{
 		id: 10,
 		name: "Vin Burgh",
-		avatar: "images/avatars/vb.png"
+		avatar: "images/avatars/vb.jpg"
 	},
 	{
 		id: 21,
 		name: "Bob",
-		avatar: "images/avatars/bob.jpg"
+		avatar: "images/avatars/bob.png"
+	}
+]
+
+var comments = [
+	{
+		id: 1,
+		patchId: 1,
+		userId: 10,
+		text: "something something",
+		timestamp: 1
+	},
+	{
+		id: 2,
+		patchId: 1,
+		userId: 10,
+		text: "something something",
+		timestamp: 2
+	},
+	{
+		id: 3,
+		patchId: 1,
+		userId: 21,
+		text: "something something",
+		timestamp: 3
+	},
+	{
+		id: 4,
+		patchId: 2,
+		userId: 21,
+		text: "something something",
+		timestamp: 4
 	}
 ]
