@@ -23,12 +23,12 @@ function viewPatch(x) {
 	return function(){
 		if(zoom) {
 			document.getElementById('collection').classList.remove('zoom-out');
-		}
 
-		planeTopPos = (getPatch(x).coorY) * -patchUnit,
-		planeLeftPos = (getPatch(x).coorX) * -patchUnit;
-		planeElement.style.setProperty('top', planeTopPos + 'px');
-		planeElement.style.setProperty('left', planeLeftPos + 'px');
+			planeTopPos = (getPatch(x).coorY) * -patchUnit,
+			planeLeftPos = (getPatch(x).coorX) * -patchUnit;
+			planeElement.style.setProperty('top', planeTopPos + 'px');
+			planeElement.style.setProperty('left', planeLeftPos + 'px');			
+		}
 
 
 		if(!zoom) {
@@ -40,8 +40,6 @@ function viewPatch(x) {
 
 			document.querySelector('.overlay p').textContent = user.name;
 			document.querySelector('.overlay img.avatar').src = user.avatar;
-
-				console.log(getPatch(x).id);
 
 			for (var j = 0; j < comments.length; j++) {
 
