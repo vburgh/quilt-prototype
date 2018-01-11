@@ -16,7 +16,6 @@ body {
 }
 
 #collection {
-	background: #fff;
     box-sizing: border-box;
 	height: 100vh;
 	position: fixed;
@@ -25,7 +24,7 @@ body {
 	left: 0;
 	width: 100%;
 	z-index: 0;
-	transition: all 0.33s linear;
+	transition: transform 0.33s linear;
 
 	&.zoom-out {
 		transform: scale(0.2);
@@ -129,57 +128,29 @@ header[role="banner"] {
 
 
 
-#contain2 {
-	background: transparent;
+#overlay {
+	background: rgba(0,0,0,0.2);
 	box-sizing: border-box;
-	overflow: hidden;
-	position: absolute;
-	top: 95vh;
-	height: 5vh;
-	width: 50vw;
-	transition: background-color 0.2s ease-in-out;
-	z-index: 1;
-
-	&.active {
-		background: rgba(200,200,200,0.5);
-		overflow: auto;
-		top: 0;
-		height: 100%;
-		width: 100vw;
-
-		#content {
-			background: #fff;
-			box-shadow: 0 8px 8px rgba(0,0,0,0.12),  0 16px 16px rgba(0,0,0,0.24);
-			top: 95vh;
-		}
-	}
-}
-
-#content {
-	background: rgba(255,255,255,0.5);
-	box-sizing: border-box;
-	height: 1000px;
-	padding: 20px;
-	position: relative;
-	top: 0;
-	width: 50vw;
-}
-
-
-.overlay {
-	background: rgba(10,10,10,0.95);
-	box-sizing: border-box;
-	color: #fff;
-	display: none;
 	overflow: auto;
 	position: absolute;
 	top: 0;
-	left: 0;
 	height: 100%;
-	width: 100%;
-	z-index: 3;
-	transition: all 0.2s ease-in-out;
-	text-align: center;
+	width: 100vw;
+	transition: background-color 0.2s ease-in-out;
+	z-index: 1;
+}
+
+#content {
+	background: #fff;
+	box-shadow: 0 8px 8px rgba(0,0,0,0.12),  0 16px 16px rgba(0,0,0,0.24);
+	box-sizing: border-box;
+	min-height: 90%;
+	padding: 20px;
+	position: relative;
+	top: 100%;
+	margin: 0 1vh;
+	transition: top 0.4s ease-in-out;
+
 
 	img.showcase {
 		max-height: 100%;

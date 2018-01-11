@@ -4,17 +4,10 @@ var body = document.querySelector('body'),
 	planeLeftPos = planeElement.scrollLeft,
 	patchUnit = 300;
 
-
 var zoom = false;
 var overlay = false;
 
-
-
-
-
-
-
-
+var overlayShow;
 
 function viewPatch(x, y) {
 
@@ -29,9 +22,6 @@ function viewPatch(x, y) {
 			planeTopPos = (patches[x-1].coorY) * -patchUnit,
 			planeLeftPos = (patches[x-1].coorX) * -patchUnit;
 
-			console.log(planeTopPos);
-			console.log(planeLeftPos);
-
 			planeElement.style.setProperty('top', planeTopPos + 'px');
 			planeElement.style.setProperty('left', planeLeftPos + 'px');
 
@@ -40,14 +30,19 @@ function viewPatch(x, y) {
 			overlay = true;
 
 			var patchViewFragment = document.createDocumentFragment(),
-				patchViewElement = document.createElement('div'),
+				overlayEl = document.createElement('div'),
+				overlayCloseEl = document.createElement('button');
+				contentEl = document.createElement('div'),
 				patchImage = document.createElement('img'),
 				patchTitle = document.createElement('h2');
 				patchAuthor = document.createElement('span'),
 				patchAvatar = document.createElement('img');
 
-			patchViewElement.classList.add('overlay');
-			patchViewElement.style.display = 'block';
+			overlayEl.id = "overlay";
+
+			contentEl.id = "content";
+
+			overlayCloseEl.textContent = "Close";
 
 			patchImage.src = patches.find(patches => patches.id === x).img;
 			patchImage.classList.add('showcase');
@@ -59,28 +54,45 @@ function viewPatch(x, y) {
 
 			patchAuthor.textContent = user.name;
 
-			patchViewElement.appendChild(patchImage);
-			patchViewElement.appendChild(patchTitle);
-			patchViewElement.appendChild(patchAuthor);
-			patchViewElement.appendChild(patchAvatar);
+			contentEl.appendChild(overlayCloseEl);
+			contentEl.appendChild(patchImage);
+			contentEl.appendChild(patchTitle);
+			contentEl.appendChild(patchAuthor);
+			contentEl.appendChild(patchAvatar);
+			overlayEl.appendChild(contentEl);
 
-			patchViewFragment.appendChild(patchViewElement);
+			patchViewFragment.appendChild(overlayEl);
 
 			body.appendChild(patchViewFragment);
 
-			patchViewElement.addEventListener('click', function(){
-				patchViewElement.parentNode.removeChild(patchViewElement);
-				overlay = false;
-			});
+			setTimeout(function(){
+				contentEl.style.top = "10%";
+			},1);
 
-			document.querySelector('.overlay').scrollTo(0,0);
+			overlayShow = overlayEl;
+
+			contentEl.addEventListener('click', function(e){ e.stopPropagation(); });
+
+			overlayEl.addEventListener('click', function(){ overlayEl.parentNode.removeChild(overlayEl); overlay = false; });
+
+			overlayCloseEl.addEventListener('click', function(){ overlayEl.parentNode.removeChild(overlayEl); overlay = false; });
+
 		}
 	}
 }
 
+document.onkeydown = function(e) {
+	if (overlay) {
+		e = e || window.event;
+		if (e.keyCode == 27) {
+			overlayShow.parentNode.removeChild(overlayShow); overlay = false;
+		}
+	}
+
+	return;
+};
 
 window.addEventListener('load', function(){
-
 	for (var h = 0; h < quiltDetails.length; h++) {
 		var quilt = quiltDetails[h];
 
@@ -130,7 +142,6 @@ function drawQuiltView (x, y) {
 		}
 	}
 }
-
 
 
 document.querySelector('button.zoom').addEventListener('click', function(){
@@ -245,20 +256,5 @@ window.addEventListener('scroll', function() {
 
 
 
-
-var testy = false,
-	warp = false;
-
-document.getElementById('content').addEventListener('click', function(){
-	if (testy===false) {
-		document.getElementById('contain2').classList.add('active');
-		document.getElementById('contain2').scrollTo(0,400);
-		testy = true;
-	} else {
-		document.getElementById('contain2').classList.remove('active');
-		document.getElementById('contain2').scrollTo(0,0);
-		testy = false;
-	}
-});
 
 */

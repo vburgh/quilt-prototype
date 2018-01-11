@@ -5,12 +5,14 @@ var quiltDetails = [
 	{
 		id: 1,
 		name: "Hello World",
-		url: "q.html"
+		url: "q.html",
+		bgColor: "#ffffff"
 	},
 	{
 		id: 2,
 		name: "Top Rated - Feb 2018",
-		url: "q2.html"
+		url: "q2.html",
+		bgColor: "#233439"
 	}
 ];
 
