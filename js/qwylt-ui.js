@@ -8,95 +8,128 @@ var body = document.querySelector('body'),
 var zoom = false;
 var overlay = false;
 
-function getPatch(x) {
-	return patches[x];
-}
 
-function getUser(x) {
-	return users[x];
-}
 
-function viewPatch(x) {
 
-	var user = users.find(users => users.id === getPatch(x).userId);
 
-	return function(){
+
+
+
+
+function viewPatch(x, y) {
+
+	return function() {
+
+		var user = users.find(users => users.id === y);
+
 		if(zoom) {
 			document.getElementById('collection').classList.remove('zoom-out');
+			zoom = false;
 
-			planeTopPos = (getPatch(x).coorY) * -patchUnit,
-			planeLeftPos = (getPatch(x).coorX) * -patchUnit;
+			planeTopPos = (patches[x-1].coorY) * -patchUnit,
+			planeLeftPos = (patches[x-1].coorX) * -patchUnit;
+
+			console.log(planeTopPos);
+			console.log(planeLeftPos);
+
 			planeElement.style.setProperty('top', planeTopPos + 'px');
-			planeElement.style.setProperty('left', planeLeftPos + 'px');			
-		}
+			planeElement.style.setProperty('left', planeLeftPos + 'px');
 
-
-		if(!zoom) {
-			setTimeout(function(){
-			document.querySelector('.overlay').style.display = "block";
-			document.querySelector('.overlay img.showcase').src = getPatch(x).img;
-			document.querySelector('.overlay h2').textContent = getPatch(x).name;
-			document.querySelector('.overlay span').textContent = getPatch(x).id;
-
-			document.querySelector('.overlay p').textContent = user.name;
-			document.querySelector('.overlay img.avatar').src = user.avatar;
-
-			for (var j = 0; j < comments.length; j++) {
-
-				var comment = comments[j];
-
-				if(comment.patchId === getPatch(x).id) {
-					document.querySelector('ul.comments').innerHTML += '<li>' + comment.text + '</li>';
-				} else {
-					document.querySelector('ul.comments').innerHTML += '';
-				}
-			}
-
-			document.querySelector('.overlay').addEventListener('click', closeOverlay);
-			document.querySelector('.overlay').scrollTo(0,0);
+		} else {
 
 			overlay = true;
-		},0);
+
+			var patchViewFragment = document.createDocumentFragment(),
+				patchViewElement = document.createElement('div'),
+				patchImage = document.createElement('img'),
+				patchTitle = document.createElement('h2');
+				patchAuthor = document.createElement('span'),
+				patchAvatar = document.createElement('img');
+
+			patchViewElement.classList.add('overlay');
+			patchViewElement.style.display = 'block';
+
+			patchImage.src = patches.find(patches => patches.id === x).img;
+			patchImage.classList.add('showcase');
+
+			patchTitle.textContent = patches.find(patches => patches.id === x).name;
+
+			patchAvatar.src = user.avatar;
+			patchAvatar.classList.add('avatar');
+
+			patchAuthor.textContent = user.name;
+
+			patchViewElement.appendChild(patchImage);
+			patchViewElement.appendChild(patchTitle);
+			patchViewElement.appendChild(patchAuthor);
+			patchViewElement.appendChild(patchAvatar);
+
+			patchViewFragment.appendChild(patchViewElement);
+
+			body.appendChild(patchViewFragment);
+
+			patchViewElement.addEventListener('click', function(){
+				patchViewElement.parentNode.removeChild(patchViewElement);
+				overlay = false;
+			});
+
+			document.querySelector('.overlay').scrollTo(0,0);
 		}
-		zoom = false;
 	}
 }
 
-function init(){
-	var patchEl = document.querySelectorAll('.patch');
-
-	for(var i = 0; i < patchEl.length; i++) {
-		patchEl[i].addEventListener('click', viewPatch(i));
-	}
-
-
-}
 
 window.addEventListener('load', function(){
+
 	for (var h = 0; h < quiltDetails.length; h++) {
 		var quilt = quiltDetails[h];
 
 		document.getElementById('individual-quilts').innerHTML += '<li><a href="' + quilt.url + '">' + quilt.name + '</a></li>';
 	}
 
-
-	for (var i = 0; i < patches.length; i++) {
-		var patch = patches[i];
-
-		if(patch.quiltId === quiltDetails.id) {
-			patchHtml = '' +
-			'<div class="patch" style="left:' + (patch.coorX * 300) + 'px; top: ' + (patch.coorY * 300) + 'px;">' +
-			'	<img src="' + patch.img + '" title="' + patch.name + ' - ' + patch.id + '">' + 
-			'	<a href="#" class="view-patch"><img src="' + users.find(users => users.id === patch.userId).avatar + '" class="avatar" /> ' + users.find(users => users.id === patch.userId).name + '</a>' +
-			'</div>';
-			planeElement.innerHTML += patchHtml;
-		}
-	}
+	drawQuiltView(patches, quiltDetails.id);
 });
 
-window.addEventListener('load', init);
 
+// creates all neccessary elements that make up the quilt view
+// x = patch, y = quilt
+function drawQuiltView (x, y) {
 
+	for (var i = 0; i < x.length; i++) {
+		if(x[i].quiltId === y) {
+			var patchFragment = document.createDocumentFragment(),
+				patchElement = document.createElement('div'),
+				patchImage = document.createElement('img'),
+				patchAuthor = document.createElement('a'),
+				patchAvatar = document.createElement('img');
+
+			var patchId = x[i].id;
+
+			patchElement.classList.add('patch');
+			patchElement.style.setProperty('left', x[i].coorX * patchUnit + 'px');
+			patchElement.style.setProperty('top', x[i].coorY * patchUnit + 'px');
+
+			patchImage.src = x[i].img;
+
+			patchAuthor.href = "#";
+			patchAuthor.classList.add('view-patch');
+			patchAuthor.textContent = users.find(users => users.id === x[i].userId).name;
+
+			patchAvatar.src = users.find(users => users.id === x[i].userId).avatar;
+			patchAvatar.classList.add('avatar');
+
+			patchElement.addEventListener('click', viewPatch(x[i].id, x[i].userId), false);
+
+			patchAuthor.appendChild(patchAvatar);
+			patchElement.appendChild(patchAuthor);
+			patchElement.appendChild(patchImage);
+			patchFragment.appendChild(patchElement);
+
+			planeElement.appendChild(patchFragment);
+
+		}
+	}
+}
 
 
 

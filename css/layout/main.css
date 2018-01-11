@@ -147,8 +147,13 @@ header[role="banner"] {
   z-index: 3;
   transition: all 0.2s ease-in-out;
   text-align: center; }
-  .overlay img {
+  .overlay img.showcase {
     max-height: 100%;
     max-width: 100%; }
+  .overlay img.avatar {
+    border-radius: 50%;
+    height: 32px;
+    margin-right: 10px;
+    width: 32px; }
 
 /*# sourceMappingURL=main.css.map */

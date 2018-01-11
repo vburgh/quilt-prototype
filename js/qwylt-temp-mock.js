@@ -12,7 +12,7 @@ var quiltDetails = [
 		name: "Top Rated - Feb 2018",
 		url: "q2.html"
 	}
-]
+];
 
 var patches = [
 	{
@@ -136,7 +136,7 @@ var users = [
 		name: "Bob",
 		avatar: "images/avatars/bob.png"
 	}
-]
+];
 
 var comments = [
 	{
@@ -167,4 +167,4 @@ var comments = [
 		text: "something something",
 		timestamp: 4
 	}
-]
+];
